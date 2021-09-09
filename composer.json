@@ -13,6 +13,11 @@
       "name": "Mohamed Abdoune",
       "email": "mohamed.abdoune@mobiledev-pro.fr",
       "role": "Developer"
+    },
+    {
+      "name": "Martin Mauriacoux",
+      "email": "martin.mauriacoux@mobiledev-pro.fr",
+      "role": "Developer"
     }
   ],
   "require": {
