@@ -8,7 +8,7 @@ use PhpOffice\PhpSpreadsheet\Writer\Exception;
 /**
  * Class AbstractExcelCreator
  */
-class AbstractExcelCreator
+abstract class AbstractExcelCreator
 {
     /**
      * @var Spreadsheet
