@@ -1,0 +1,15 @@
+{
+  "name": "starter-kit/tools",
+  "type": "library",
+  "description": "Development tools to add to the pw starter kit",
+  "keywords": ["tools", "starter-kit", "pw"],
+  "homepage": "",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Mohamed Abdoune",
+      "email": "mohamed.abdoune@mobiledev-pro.fr",
+      "role": "Developer"
+    }
+  ]
+}
