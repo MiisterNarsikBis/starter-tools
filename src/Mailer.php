@@ -42,7 +42,7 @@ class Mailer
 
         $mail = $this->setConfig();
         $mail->CharSet = "utf-8";
-        $mail->setFrom(EMAIL_SENDER, NOM_CLIENT); // pw sstarter kit config
+        $mail->setFrom(EMAIL_SENDER, NOM_CLIENT); // pw starter kit config
         $mail->addAddress($to);
 
         $mail->isHTML(true);  // Set email format to HTML

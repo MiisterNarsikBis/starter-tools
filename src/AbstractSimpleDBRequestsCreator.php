@@ -3,7 +3,7 @@
 /**
  * Class AbstractSimpleDB
  */
-abstract class AbstractSimpleDB
+abstract class AbstractSimpleDBRequestsCreator
 {
 
     /**
