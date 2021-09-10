@@ -8,44 +8,27 @@
 class CsvGenerator
 {
     /**
-     * @param $lstObjet
-     * @param $header
-     * @param $filename
+     * @param string $fileName
+     * @param array $assocDataArray
      */
-    public function exportCSV($lstObjet,$header,$filename)
+    public function exportCSV( string $fileName , array  $assocDataArray)
     {
-        $csv = array();
-        $csv[] = $header;
-        $i = 1;
-
-            foreach($lstObjet as $valeur) {
-                $tab = array($valeur);
-                $tab = implode('¤',$tab);
-                $tab = str_replace("\r" , ' ' , $tab);
-                $tab = str_replace("\n" , ' ' , $tab);
-                $tab = str_replace("\t" , ' ' , $tab);
-                $tab = str_replace("\f" , ' ' , $tab);
-                $tab = str_replace("\v" , ' ' , $tab);
-                $tab = str_replace("  " , ' ' , $tab);
-                $tab = str_replace(" ," , ',' , $tab);
-                $tab = str_replace("µ" , "\n" , $tab);
-                $tab = str_replace("\n".'"' , '"' , $tab);
-                $tab = str_replace(';' , ',' , $tab);
-                $tab = str_replace('¤' , ';' , $tab);
-                $valeur = $tab;
-                $csv[$i][] = $valeur;
-                $i++;
+        ob_clean();
+        header('Pragma: public');
+        header('Expires: 0');
+        header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+        header('Cache-Control: private', false);
+        header('Content-Type: text/csv');
+        header('Content-Disposition: attachment;filename=' . $fileName);
+        if(isset($assocDataArray['0'])){
+            $fp = fopen('php://output', 'w');
+            //fputcsv($fp, array_keys($assocDataArray['0']));
+            foreach($assocDataArray AS $values){
+                fputcsv($fp, $values);
             }
-
-        header('Content-Type: text/csv;');
-        header('Content-Disposition: attachment; filename="'.$filename.'.csv";');
-        header('Pragma: no-cache');
-
-        foreach ($csv as $val){
-            echo utf8_decode(implode(";", $val)."\n");
+            fclose($fp);
         }
-
-        exit();
+        ob_flush();
     }
 
 }
