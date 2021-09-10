@@ -11,6 +11,7 @@ Development tools to add to the pw starter kit
 
 ## Installation
 composer require pw-starter-kit/tools.
+
 Make sure that the autoload file from Composer is loaded.
 
 ## License
