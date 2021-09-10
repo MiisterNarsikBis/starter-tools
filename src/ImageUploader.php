@@ -25,7 +25,7 @@ class ImageUploader
             if ($lastPos !== false && in_array(strToLower(subStr($lastPos, 1)), $authorized_extensions)) {
                 $destination_dir .= date('Ymd');
                 $destination_file = uniqid();
-                if (move_uploaded_file($file['tmp_name'], $destination_dir . '/' . $destination_file . '_origine.png')) {
+                if (move_uploaded_file($file['tmp_name'], $destination_dir . '/' . $destination_file . '_origine.jpeg')) {
                     $path = date('Ymd') . "/$destination_file";
 
                     @unlink($destination_dir . $destination_file . '_redim.jpg');

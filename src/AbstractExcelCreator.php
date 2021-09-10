@@ -57,7 +57,7 @@ abstract class AbstractExcelCreator
     protected function stream()
     {
         $writer = IOFactory::createWriter($this->spreadsheet, 'Xls');
-        header('Content-Disposition: attachment; filename="'. urlencode('gifi-loc-users.xls').'"');
+        header('Content-Disposition: attachment; filename="'. urlencode('test.xls').'"');
         return $writer->save('php://output');
     }
 
