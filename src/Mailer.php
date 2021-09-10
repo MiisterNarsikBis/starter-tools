@@ -1,5 +1,7 @@
 <?php
 
+namespace PwStarterKit\Tools;
+
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 

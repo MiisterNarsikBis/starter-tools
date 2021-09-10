@@ -1,5 +1,7 @@
 <?php
 
+namespace PwStarterKit\Tools;
+
 /**
  * Class AbstractSimpleDB
  */
@@ -45,7 +47,7 @@ abstract class AbstractSimpleDBRequestsCreator
      * @param int $limit
      * @return array
      */
-    protected function findAll(string $table, int $limit = 10000)
+    protected function findAll(string $table, int $limit )
     {
         $sql = $this->bd->prepare("SELECT * FROM " .$table. " WHERE id  > 0 LIMIT ".$limit);
         $sql->execute();

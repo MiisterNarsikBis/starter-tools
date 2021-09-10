@@ -1,5 +1,7 @@
 <?php
 
+namespace PwStarterKit\Tools;
+
 use Dompdf\Dompdf;
 use Dompdf\Options;
 
@@ -31,7 +33,7 @@ class PdfManager
      * @param string $destination
      * @return string
      */
-    public function generatePdf(array $params = [], string $template = '../bdc-pdf.php', string $destination = '../upload/commandes/')
+    public function generatePdf(array $params = [], string $template , string $destination )
     {
         $dompdf = $this->setPdf();
         ob_start();

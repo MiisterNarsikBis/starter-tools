@@ -1,5 +1,8 @@
 <?php
 
+namespace PwStarterKit\Tools;
+
+
 /**
  * @author Benoit Farges <benoit@profil-web.fr>
  *
