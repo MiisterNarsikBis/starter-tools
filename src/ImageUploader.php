@@ -5,6 +5,7 @@
  */
 class ImageUploader
 {
+
     /**
      * @param array $file
      * @param string $destination_dir
