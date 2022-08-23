@@ -47,13 +47,30 @@ abstract class AbstractSimpleDBRequestsCreator
      * @param int $limit
      * @return array
      */
-    protected function findAll(string $table, int $limit )
+    protected function findAll(string $table, int $limit , array $order = [])
     {
-        $sql = $this->bd->prepare("SELECT * FROM " .$table. " WHERE id  > 0 LIMIT ".$limit);
-        $sql->execute();
-        $results = $sql->fetchAll();
+        $rq = "SELECT * FROM " .$table;
 
-        return $results;
+        if(!empty($order)){
+            $i = 0;
+            foreach ($order as $by => $val){
+                if($i == 0) {
+                    $rq .= " ORDER BY ".$by." ? ";
+                }else{
+                    $rq .= ", ".$by." ? ";
+                }
+                $i++;
+            }
+        }
+
+        $rq .= " LIMIT ".$limit;
+
+        $sql = $this->bd->prepare($rq);
+
+        $values = array_values($order);
+        $sql->execute($values);
+
+        return $sql->fetchAll();
     }
 
     /**
@@ -65,10 +82,12 @@ abstract class AbstractSimpleDBRequestsCreator
      * @return array
      * @throws Exception
      */
-    protected function findBy(array $params,int $limit ,string $table)
+    protected function findBy(array $params,int $limit ,string $table, array $order = [])
     {
         $field = array_keys($params);
         $value = array_values($params);
+        $valueOrder = array_values($order);
+
         foreach ($field as $item){
             if(!$this->checkField($item, $table)){
                 throw new Exception("Le champs ".$item." n'existe pas dans la table de destination! ");
@@ -80,50 +99,27 @@ abstract class AbstractSimpleDBRequestsCreator
         for ($i = 1; $i < $len; $i++){
             $sql .= " AND ".$field[$i]." = ? ";
         }
-        $sql .= " LIMIT ".$limit;
-        $req = $this->bd->prepare($sql);
-        $req->execute($value);
 
-        $results = $req->fetchAll();
-        return $results;
-    }
-
-    /**
-     * Find multipls row by one param or more + order by
-     *
-     * @param array $params
-     * @param int $limit
-     * @param string $table
-     * @param array|null $order
-     * @return array
-     * @throws Exception
-     */
-    protected function findByWithOrder(array $params,int $limit ,string $table, array $order = null)
-    {
-        $field = array_keys($params);
-        $value = array_values($params);
-        foreach ($field as $item){
-            if(!$this->checkField($item, $table)){
-                throw new Exception("Le champs ".$item." n'existe pas dans la table de destination! ");
+        if(!empty($order)){
+            $i = 0;
+            foreach ($order as $by => $val){
+                if($i == 0) {
+                    $sql .= " ORDER BY ".$by." ? ";
+                }else{
+                    $sql .= ", ".$by." ? ";
+                }
+                $i++;
             }
         }
 
-        $len = count($field);
-        $sql = "SELECT * FROM " .$table. " WHERE ".$field[0]." = ?";
-        for ($i = 1; $i < $len; $i++){
-            $sql .= " AND ".$field[$i]." = ? ";
-        }
-        if($order != null){
-            $sql .= " ORDER BY ".$order['champ']." ".$order['sens'];
-        }
         $sql .= " LIMIT ".$limit;
         $req = $this->bd->prepare($sql);
+        $value = array_merge($value, $valueOrder);
         $req->execute($value);
 
         $results = $req->fetchAll();
         return $results;
     }
-
 
     /**
      * Update row by field name and value, $params = ["field" => $value , ...,"id" => $id], id should be the last key in params []
