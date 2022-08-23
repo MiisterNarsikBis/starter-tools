@@ -86,7 +86,6 @@ abstract class AbstractSimpleDBRequestsCreator
     {
         $field = array_keys($params);
         $value = array_values($params);
-        $valueOrder = array_values($order);
 
         foreach ($field as $item){
             if(!$this->checkField($item, $table)){
@@ -104,9 +103,9 @@ abstract class AbstractSimpleDBRequestsCreator
             $i = 0;
             foreach ($order as $by => $val){
                 if($i == 0) {
-                    $sql .= " ORDER BY ".$by." ? ";
+                    $sql .= " ORDER BY ".$by." ".$val;
                 }else{
-                    $sql .= ", ".$by." ? ";
+                    $sql .= ", ".$by." ".$val;
                 }
                 $i++;
             }
@@ -114,7 +113,6 @@ abstract class AbstractSimpleDBRequestsCreator
 
         $sql .= " LIMIT ".$limit;
         $req = $this->bd->prepare($sql);
-        $value = array_merge($value, $valueOrder);
         $req->execute($value);
 
         $results = $req->fetchAll();
